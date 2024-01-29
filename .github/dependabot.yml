@@ -4,17 +4,20 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-      time: "06:00"
-      timezone: "	America/New_York"
+      time: "08:00"
     labels:
       - "dependencies"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "daily"
-      time: "06:00"
-      timezone: "	America/New_York"
-    allow:
-      - dependency-type: "production"
+      time: "08:00"
     labels:
       - "dependencies"
+    commit-message:
+      prefix: "chore"
+      include: "scope"

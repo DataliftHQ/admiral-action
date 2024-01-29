@@ -15,18 +15,17 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Checkout
-        uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           fetch-depth: 0
-      -
-        name: Test
-        uses: docker/bake-action@v4
+
+      - name: Test
+        uses: docker/bake-action@849707117b03d39aba7924c50a10376a69e88d7d # v4.1.0
         with:
           targets: test
-      -
-        name: Upload coverage
-        uses: codecov/codecov-action@v3
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@4fe8c5f003fae66aa5ebb77cfd3e7bfbbda0b6b0 # v3.1.5
         with:
           file: ./coverage/clover.xml

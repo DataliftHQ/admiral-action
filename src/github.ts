@@ -20,8 +20,8 @@ export const getReleaseTag = async (
     return {tag_name: version}
   }
   const tag: string = (await resolveVersion(version)) || version
-  const url = `https://releases.datalift.dev/datalift-cli/tags.json`
-  const http: httpm.HttpClient = new httpm.HttpClient('datalift-action')
+  const url = `https://releases.datalift.dev/admiral/tags.json`
+  const http: httpm.HttpClient = new httpm.HttpClient('admiral-action')
   http.requestOptions = {
     maxRetries: 3,
     socketTimeout: 3 * 1000,
@@ -34,7 +34,7 @@ export const getReleaseTag = async (
   const statusCode = resp.message.statusCode || 500
   if (statusCode >= 400) {
     throw new Error(
-      `Failed to get Datalift release ${version} from ${url} with status code ${statusCode}: ${body}`
+      `Failed to get Admiral release ${version} from ${url} with status code ${statusCode}: ${body}`
     )
   }
   const releases = <Array<GitHubRelease>>JSON.parse(body)
@@ -42,12 +42,12 @@ export const getReleaseTag = async (
   if (res) {
     return res
   }
-  throw new Error(`Cannot find Datalift release ${version} in ${url}`)
+  throw new Error(`Cannot find Admiral release ${version} in ${url}`)
 }
 
 export const getLatestRelease = async (): Promise<GitHubRelease> => {
-  const url = `https://releases.datalift.dev/datalift-cli/latest`
-  const http: httpm.HttpClient = new httpm.HttpClient('datalift-action')
+  const url = `https://releases.datalift.dev/admiral/latest`
+  const http: httpm.HttpClient = new httpm.HttpClient('admiral-action')
   http.requestOptions = {
     maxRetries: 3,
     socketTimeout: 3 * 1000,
@@ -60,7 +60,7 @@ export const getLatestRelease = async (): Promise<GitHubRelease> => {
   const statusCode = resp.message.statusCode || 500
   if (statusCode >= 400) {
     throw new Error(
-      `Failed to get Datalift release latest from ${url} with status code ${statusCode}: ${body}`
+      `Failed to get Admiral release latest from ${url} with status code ${statusCode}: ${body}`
     )
   }
   return {tag_name: body}
@@ -81,7 +81,7 @@ interface GitHubTag {
 }
 
 const getAllTags = async (): Promise<Array<string>> => {
-  const http: httpm.HttpClient = new httpm.HttpClient('datalift-action')
+  const http: httpm.HttpClient = new httpm.HttpClient('admiral-action')
   http.requestOptions = {
     maxRetries: 3,
     socketTimeout: 3 * 1000,
@@ -89,7 +89,7 @@ const getAllTags = async (): Promise<Array<string>> => {
       cookie: 'preview=true'
     }
   }
-  const url = `https://releases.datalift.dev/datalift-cli/tags.json`
+  const url = `https://releases.datalift.dev/admiral/tags.json`
   core.debug(`Downloading ${url}`)
   const getTags = http.getJson<Array<GitHubTag>>(url)
   return getTags.then(response => {
