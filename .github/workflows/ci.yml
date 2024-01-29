@@ -18,7 +18,7 @@ on:
 
 jobs:
   install-only:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
@@ -26,12 +26,12 @@ jobs:
           - latest
           - '~> 0.1'
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           fetch-depth: 0
 
-      - name: Datalift
+      - name: Admiral
         if: ${{ !(github.event_name == 'pull_request') }}
         uses: ./
         with:
@@ -41,4 +41,4 @@ jobs:
         name: Check
         if: ${{ !(github.event_name == 'pull_request') }}
         run: |
-          datalift help
+          admiral help
