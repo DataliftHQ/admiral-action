@@ -1,10 +1,10 @@
-# Datalift Action
-Datalift Action runs datalift cli.
+# Admiral Action
+Admiral Action runs admiral cli.
 
 ### Workflow
 
 ```yaml
-name: datalift
+name: admiral
 
 on:
   pull_request:
@@ -21,18 +21,18 @@ jobs:
         name: Checkout
         uses: actions/checkout@v4
       -
-        name: Run Datalift
-        uses: DataliftHQ/datalift-action@v1
+        name: Run Admiral
+        uses: DataliftHQ/admiral-action@v1
         with:
           version: latest
           args: release
         env:
-          DATALIFT_API_KEY: ${{ secrets.DATALIFT_API_KEY }}
+          ADMIRAL_TOKEN: ${{ secrets.ADMIRAL_TOKEN }}
 ```
 
 ### Run on new tag
 
-If you want to run Datalift only on new tag, you can use this event:
+If you want to run Admiral only on new tag, you can use this event:
 
 ```yaml
 on:
@@ -41,18 +41,18 @@ on:
       - '*'
 ```
 
-Or with a condition on Datalift step:
+Or with a condition on Admiral step:
 
 ```yaml
       -
-        name: Run Datalift
-        uses: DataliftHQ/datalift-action@v1
+        name: Run Admiral
+        uses: DataliftHQ/admiral-action@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           version: latest
           args: release
         env:
-          DATALIFT_API_KEY: ${{ secrets.DATALIFT_API_KEY }}
+          ADMIRAL_TOKEN: ${{ secrets.ADMIRAL_TOKEN }}
 ```
 
 > For detailed instructions please follow GitHub Actions [workflow syntax](https://help.github.com/en/articles/workflow-syntax-for-github-actions#About-yaml-syntax-for-workflows).
@@ -62,13 +62,13 @@ Or with a condition on Datalift step:
 ```yaml
 steps:
   -
-    name: Install Datalift
-    uses: DataliftHQ/datalift-action@v1
+    name: Install Admiral
+    uses: DataliftHQ/admiral-action@v1
     with:
       install-only: true
   -
-    name: Show Datalift version
-    run: datalift -v
+    name: Show Admiral version
+    run: admiral --version
 ```
 
 ## Customizing
@@ -79,10 +79,10 @@ Following inputs can be used as `step.with` keys
 
 | Name             | Type    | Default      | Description                               |
 |------------------|---------|--------------|-------------------------------------------|
-| `version`**¹**   | String  | `latest`     | Datalift version                          |
-| `args`           | String  |              | Arguments to pass to Datalift             |
+| `version`**¹**   | String  | `latest`     | Admiral version                           |
+| `args`           | String  |              | Arguments to pass to Admiral              |
 | `workdir`        | String  | `.`          | Working directory (below repository root) |
-| `install-only`   | Bool    | `false`      | Just install Datalift                     |
+| `install-only`   | Bool    | `false`      | Just install Admiral                      |
 
 > **¹** Can be a fixed version like `v0.1.0` or a max satisfying semver one like `~> 0.1`. In this case this will return `v0.1.1`.
 
@@ -99,9 +99,9 @@ Following outputs are available
 
 Following environment variables can be used as `step.env` keys
 
-| Name               | Description           |
-|--------------------|-----------------------|
-| `DATALIFT_API_KEY` | Your Datalift API Key |
+| Name               | Description               |
+|--------------------|---------------------------|
+| `ADMIRAL_TOKEN`    | Your Admiral Access Token |
 
 ## Development
 

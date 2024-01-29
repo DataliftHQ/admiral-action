@@ -11,7 +11,7 @@ export async function install(version: string): Promise<string> {
   const release: github.GitHubRelease = await github.getRelease(version)
   const filename = getFilename(context.osArch, context.osPlat, release.tag_name)
   const downloadUrl = util.format(
-    'https://github.com/DataliftHQ/datalift-cli/releases/download/%s/%s',
+    'https://github.com/DataliftHQ/admiral/releases/download/%s/%s',
     release.tag_name,
     filename
   )
@@ -20,7 +20,7 @@ export async function install(version: string): Promise<string> {
   const downloadPath: string = await tc.downloadTool(downloadUrl)
   core.debug(`Downloaded to ${downloadPath}`)
 
-  core.info('Extracting Datalift')
+  core.info('Extracting Admiral')
   let extPath: string
   if (context.osPlat == 'win32') {
     if (!downloadPath.endsWith('.zip')) {
@@ -37,14 +37,14 @@ export async function install(version: string): Promise<string> {
 
   const cachePath: string = await tc.cacheDir(
     extPath,
-    'datalift-action',
+    'admiral-action',
     release.tag_name.replace(/^v/, '')
   )
   core.debug(`Cached to ${cachePath}`)
 
   const exePath: string = path.join(
     cachePath,
-    context.osPlat == 'win32' ? 'datalift.exe' : 'datalift'
+    context.osPlat == 'win32' ? 'admiral.exe' : 'admiral'
   )
   core.debug(`Exe path is ${exePath}`)
 
@@ -83,5 +83,5 @@ const getFilename = (
     osPlat == 'win32' ? 'windows' : osPlat == 'darwin' ? 'darwin' : 'linux'
   const ext: string = osPlat == 'win32' ? 'zip' : 'tar.gz'
 
-  return util.format('datalift-%s_%s_%s.%s', tag_version, platform, arch, ext)
+  return util.format('admiral-%s_%s_%s.%s', tag_version, platform, arch, ext)
 }

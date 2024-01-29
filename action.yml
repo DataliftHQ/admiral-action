@@ -1,24 +1,24 @@
-name: "Datalift Action"
-description: "GitHub Action for Datalift"
-author: "Datalift LLC"
+name: "Admiral Action"
+description: "GitHub Action for Admiral"
+author: "Datalift LLC."
 branding:
   icon: 'code'
   color: 'blue'
 
 inputs: 
   version:
-    description: 'Datalift version'
+    description: 'Admiral version'
     default: 'latest'
     required: false
   args:
-    description: 'Arguments to pass to Datalift'
+    description: 'Arguments to pass to Admiral'
     required: false
   workdir:
     description: 'Working directory (below repository root)'
     default: '.'
     required: false
   install-only:
-    description: 'Only install Datalift'
+    description: 'Only install Admiral'
     default: 'false'
     required: false
 
