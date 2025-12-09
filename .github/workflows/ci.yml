@@ -1,0 +1,47 @@
+name: ci
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+on:
+  schedule:
+    - cron: '0 10 * * *'
+  workflow_dispatch:
+  push:
+    branches:
+      - 'master'
+      - 'releases/v*'
+    tags:
+      - 'v*'
+  pull_request:
+
+jobs:
+  install-only:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        version:
+          - latest
+          - '~> 0.1'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Admiral
+        if: ${{ !(github.event_name == 'pull_request') }}
+        uses: ./
+        with:
+          version: ${{ matrix.version }}
+          install-only: true
+      -
+        name: Check
+        if: ${{ !(github.event_name == 'pull_request') }}
+        run: |
+          admiral help
