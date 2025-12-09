@@ -1,0 +1,31 @@
+name: "Admiral Action"
+description: "GitHub Action for Admiral"
+author: "Datalift LLC"
+branding:
+  icon: 'code'
+  color: 'purple'
+
+inputs: 
+  version:
+    description: 'Admiral version'
+    default: 'latest'
+    required: false
+  args:
+    description: 'Arguments to pass to Admiral'
+    required: false
+  workdir:
+    description: 'Working directory (below repository root)'
+    default: '.'
+    required: false
+  install-only:
+    description: 'Only install Admiral'
+    default: 'false'
+    required: false
+
+outputs:
+  metadata:
+    description: 'Build result metadata'
+
+runs:
+  using: "node22"
+  main: "dist/index.js"
